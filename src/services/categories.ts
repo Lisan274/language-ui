@@ -1,4 +1,5 @@
 import axios from "axios";
+import { resolve } from "dns";
 
 const query: string = "http://localhost:3001"
 
@@ -32,3 +33,14 @@ export function deleteCategory(id: string): Promise<any>{
         .catch(error => resolve({successed:false}));
     });
 }
+
+export function GetlanguagessByIdCategorie(id: string): Promise<any>{
+    return new Promise<any>(resolve=>{
+        axios.get(`${query}/categories/${id}`)
+        .then(result=>{
+            resolve(result.data);
+        })
+        .catch(error => resolve([]));
+    });
+}
+

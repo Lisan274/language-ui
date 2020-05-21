@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from "react";
 
-import {getCategoriesWLanguages, deleteCategory} from "../services/categories";
+import {getCategoriesWLanguages, deleteCategory, GetlanguagessByIdCategorie} from "../services/categories";
 import Modal from "./modal";
+import { Link } from "react-router-dom";
+import { ICategory } from "../interfaces/category";
 
 const CategoryTable: React.FC = () => {
 
@@ -61,10 +63,15 @@ const CategoryTable: React.FC = () => {
         if(!updatedCategories){
             getCategoriesWLanguages().then(r=>{                
                 setCategories(r);
-                setUpdatedCategories(true);               
+                setUpdatedCategories(true); 
+                              
             });            
         } 
     },[updatedCategories]);
+
+    function recolatepage(event: any) {
+        window.location.href = `/languages/${categoryId}`
+    }
 
     return(
 
@@ -87,6 +94,7 @@ const CategoryTable: React.FC = () => {
                         <th scope="col">Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Languages Setted</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>                
                     </tr>
                 </thead>
@@ -103,6 +111,14 @@ const CategoryTable: React.FC = () => {
                                 onClick={showModal} 
                                 id={data._id}
                                 >Delete</button>
+                            </td>
+                            <td>
+                                <Link
+                                type="button"
+                                className="btn btn-info"
+                                id={data._id}
+                                to={`/categories/${data._id}`}
+                                >Go</Link>
                             </td>
                     </tr>
                     ))}

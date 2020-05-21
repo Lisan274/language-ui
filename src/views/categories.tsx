@@ -4,7 +4,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Subheader from "../components/subheader";
 import CategoryTable from "../components/category-table"
-
+import { ICategory } from "../interfaces/category"
 const Categories: React.FC = () => {
     return(
         <div>

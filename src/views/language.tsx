@@ -8,20 +8,28 @@ import Card from "../components/card";
 import {ILanguage} from "../interfaces/language";
 
 import {getLanguages} from "../services/languages";
+import {useParams} from "react-router-dom";
+
+import {GetlanguagessByIdCategorie} from "../services/categories"
 
 const Language: React.FC = () => { 
 
     const [languages,setLanguages] = useState([]);
     const [update,setUpdate] = useState(true);
+    const [categoria, setCategoria] = useState(" ");
+    const {_id} = useParams();
 
     useEffect(()=>{
         if(update){
-            getLanguages().then( r=>{                
+            {
+            getLanguages().then(r=>{
                 setUpdate(false);
                 setLanguages(r.data);
+                setCategoria("Language Management");
             });
         }      
-    },[update]);
+    }
+    },[update, categoria, _id]);
 
     useEffect(() => {
         return () => {
@@ -33,8 +41,9 @@ const Language: React.FC = () => {
         <div>
             <Header></Header>
             <div className="container">
-                <Subheader title="Language Management" ></Subheader>
+                <Subheader title={categoria} ></Subheader>
                 <div className="row text-center">
+                    {_id == undefined &&
                     <Card 
                         title="<New Language here>" 
                         description="Click the button to create a new language"
@@ -42,6 +51,7 @@ const Language: React.FC = () => {
                         category=""
                         btn_label="New One"
                     />
+                    }   
                     {languages.map((lan: ILanguage,index) => (
                         <Card 
                             title={lan.name} 
